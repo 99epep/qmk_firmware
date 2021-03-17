@@ -8,12 +8,11 @@
 #define COMBO_TERM 50
 #define TAPPING_TERM 260
 
-enum layer_names {
-    BEPO,
-    NAVIG,
-    NUMPAD,
-    MOUSE
-};
+//enum layer_names { BEPO, NAVIG, NUMPAD, MOUSE };
 
+#define COMBO_ONLY_FROM_LAYER 0
+//#define COMBO_ONLY_FROM_LAYER BEPO
 
-#define COMBO_ONLY_FROM_LAYER BEPO
+#define NO_ACTION_MACRO
+#define NO_ACTION_FUNCTION
+

@@ -2,12 +2,12 @@
 //
 // this is the style you want to emulate.
 // This is the canonical layout file for the Quantum project. If you want to add another keyboard,
-
 #include QMK_KEYBOARD_H
 #include "keymap_bepo.h"
-#include <config.h>
+#include "keymap_french.h"
+#include "config.h"
 
-
+enum layer_names { BEPO, NAVIG, NUMPAD, MOUSE };
 
 typedef struct {
     bool is_press_action;
@@ -18,7 +18,7 @@ typedef struct {
 enum {
     TDLAYR,
     TDSLP,
-    TDOVRD,
+//    TDOVRD,
 };
 
 // Declare the functions to be used with your tap dance key(s)
@@ -41,10 +41,10 @@ LCTL_T(BP_AGRV),RALT_T(BP_Y),LALT_T(BP_X),BP_DOT,  BP_K,    TD(TDLAYR), KC_SPC, 
 ),
 
   [NAVIG] = LAYOUT( /* Fn à gauche, navigation à droite */
-KC_F9, 		KC_F10,	KC_F11, KC_F12,   KC_PAUS,		     KC_CUT,  KC_HOME, KC_INS,  KC_PGUP, KC_NO,
-KC_F5, 		KC_F6,	KC_F7, 	KC_F8, 	  KC_SLCK,		     KC_PSTE, KC_END,  KC_UP,   KC_PGDN, KC_NO,
+KC_F9, 		KC_F10,	KC_F11, KC_F12,   KC_PAUS,		     KC_CUT,  KC_HOME, KC_INS,  KC_PGUP, KEY_OVERRIDE_OFF,
+KC_F5, 		KC_F6,	KC_F7, 	KC_F8, 	  KC_SLCK,		     KC_PSTE, KC_END,  KC_UP,   KC_PGDN, KEY_OVERRIDE_ON,
 LSFT_T(KC_F1),	KC_F2, 	KC_F3, 	KC_F4, 	  KC_PSCR,   _______,_______,KC_COPY, KC_LEFT, KC_DOWN, KC_RGHT, KC_RSFT,
-KC_LCTL, 	KC_RALT,KC_LALT,TD(TDSLP),TD(TDOVRD),_______,_______,KC_UNDO, KC_NO,   KC_LALT, KC_RALT, KC_RCTL
+KC_LCTL, 	KC_RALT,KC_LALT,TD(TDSLP),KC_NO,_______,_______,KC_UNDO, KC_NO,   KC_LALT, KC_RALT, KC_RCTL
 ),
 
   [NUMPAD] = LAYOUT( /* Multimédia à gauche, pavé numérique à droite */
@@ -126,6 +126,32 @@ qk_tap_dance_action_t tap_dance_actions[] = {
     // DoubleTap pour faire dodo
     [TDSLP] = ACTION_TAP_DANCE_DOUBLE(KC_NO, KC_SLEP),
     // DoubleTap pour bépozerty
-    [TDOVRD] = ACTION_TAP_DANCE_DOUBLE(KEY_OVERRIDE_OFF, KEY_OVERRIDE_ON)
+//    [TDOVRD] = ACTION_TAP_DANCE_DOUBLE(KEY_OVERRIDE_OFF, KEY_OVERRIDE_ON),
+};
+
+
+// Overrides definition
+
+//const key_override_t dot_ko = ko_make_with_layers_and_negmods(0, KC_V, S(KC_COMM), 1, MOD_MASK_SHIFT);
+
+const key_override_t coln_ko = ko_make_basic(MOD_MASK_SHIFT, KC_V, KC_DOT);
+const key_override_t dot_ko = ko_make_basic(0, KC_V, S(KC_COMM));
+
+const key_override_t z_ko = ko_make_basic(0, KC_LBRC, KC_W);
+
+const key_override_t agrv_ko = ko_make_basic(0, LCTL_T(BP_AGRV), KC_0);
+const key_override_t sagrv_ko = ko_make_basic(MOD_MASK_SHIFT, LCTL_T(BP_AGRV), S(KC_Q) );
+
+const key_override_t a_ko = ko_make_basic(0, MT(MOD_LSFT, BP_A), MT(MOD_LSFT, KC_Q));
+
+
+const key_override_t **key_overrides = (const key_override_t *[]){
+	&coln_ko,
+	&dot_ko,
+	&z_ko,
+	&agrv_ko,
+	&sagrv_ko,
+	&a_ko,
+	NULL
 };
 
